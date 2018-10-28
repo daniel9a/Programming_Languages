@@ -1,0 +1,15 @@
+mode: set
+bug3/bug3.go:4.37,5.10 1 1
+bug3/bug3.go:27.6,27.16 1 1
+bug3/bug3.go:5.10,6.14 1 1
+bug3/bug3.go:22.7,22.35 1 1
+bug3/bug3.go:7.27,8.14 1 1
+bug3/bug3.go:11.8,11.15 1 1
+bug3/bug3.go:14.27,15.14 1 1
+bug3/bug3.go:18.8,18.15 1 1
+bug3/bug3.go:8.14,10.9 1 1
+bug3/bug3.go:11.15,13.9 1 1
+bug3/bug3.go:15.14,17.9 1 1
+bug3/bug3.go:18.15,20.9 1 1
+bug3/bug3.go:22.35,23.16 1 1
+bug3/bug3.go:30.75,43.2 6 1

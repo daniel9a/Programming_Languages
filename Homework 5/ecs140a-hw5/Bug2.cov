@@ -1,0 +1,5 @@
+mode: set
+bug2/bug2.go:8.30,11.25 2 1
+bug2/bug2.go:20.2,20.11 1 1
+bug2/bug2.go:11.25,14.13 3 1
+bug2/bug2.go:14.13,18.4 2 1

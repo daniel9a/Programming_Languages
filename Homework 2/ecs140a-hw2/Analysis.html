@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">analysis/branch.go (94.1%)</option>
+				
+				<option value="file1">analysis/cyclo.go (67.4%)</option>
+				
+				<option value="file2">analysis/rewrite.go (100.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package analysis
+
+import (
+  "go/ast"
+  "go/parser"
+  "go/token"
+)
+
+func branchCount(fn *ast.FuncDecl) uint <span class="cov8" title="1">{
+  var count uint = 0
+  ast.Inspect(fn, func (n ast.Node) bool </span><span class="cov8" title="1">{
+    switch n.(type) </span>{
+    <span class="cov8" title="1">case *ast.IfStmt:
+      count += 1</span>
+    <span class="cov8" title="1">case *ast.RangeStmt:
+      count += 1</span>
+    <span class="cov8" title="1">case *ast.SwitchStmt:
+      count += 1</span>
+    }
+
+    <span class="cov8" title="1">return true</span>
+  })
+  <span class="cov8" title="1">return count</span>
+}
+
+func ComputeBranchFactors(src string) map[string]uint <span class="cov8" title="1">{
+  fset := token.NewFileSet()
+  f, err := parser.ParseFile(fset, "src.go", src, 0)
+  if err != nil </span><span class="cov0" title="0">{
+    panic(err)</span>
+  }
+
+  <span class="cov8" title="1">m := make(map[string]uint)
+  for _, decl := range f.Decls </span><span class="cov8" title="1">{
+    switch fn := decl.(type) </span>{
+    <span class="cov8" title="1">case *ast.FuncDecl:
+      m[fn.Name.Name] = branchCount(fn)</span>
+    }
+  }
+
+  <span class="cov8" title="1">return m</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package analysis
+
+import (
+  "go/ast"
+  "go/parser"
+  "go/token"
+)
+
+func cyclomatic(node ast.Stmt) uint <span class="cov8" title="1">{
+  switch v := node.(type)</span>{
+  <span class="cov8" title="1">case *ast.BlockStmt:
+    var y uint = 1
+    for i := 0; i &lt; len(v.List); i++ </span><span class="cov8" title="1">{
+      x := cyclomatic(v.List[i])
+      y *= x
+    }</span>
+    <span class="cov8" title="1">return y</span>
+  <span class="cov8" title="1">case *ast.CaseClause:
+    var y uint = 1
+    for i := 0; i &lt; len(v.Body); i++ </span><span class="cov8" title="1">{
+      x := cyclomatic(v.Body[i])
+      y *= x
+    }</span>
+    <span class="cov8" title="1">return y</span>
+  <span class="cov8" title="1">case *ast.SwitchStmt:
+    var y uint = 0
+    var check bool = false
+    for i := 0; i &lt; len(v.Body.List); i++ </span><span class="cov8" title="1">{
+      x := cyclomatic(v.Body.List[i])
+      y += x
+    }</span> 
+    <span class="cov8" title="1">if v.Body.List == nil </span><span class="cov0" title="0">{
+      check = true
+    }</span>
+    <span class="cov8" title="1">if check </span><span class="cov0" title="0">{
+      y += 1
+    }</span>
+    <span class="cov8" title="1">return y</span>
+  <span class="cov0" title="0">case *ast.TypeSwitchStmt:
+    var y uint = 0
+    var check bool = false
+    for i := 0; i &lt; len(v.Body.List); i++ </span><span class="cov0" title="0">{
+      x := cyclomatic(v.Body.List[i])
+      y += x
+    }</span> 
+    <span class="cov0" title="0">if v.Body.List == nil </span><span class="cov0" title="0">{
+      check = true
+    }</span>
+    <span class="cov0" title="0">if check </span><span class="cov0" title="0">{
+      y += 1
+    }</span> 
+    <span class="cov0" title="0">return y</span>
+  <span class="cov8" title="1">case *ast.IfStmt:
+    return cyclomatic(v.Else) + cyclomatic(v.Body)</span>
+  <span class="cov0" title="0">case *ast.RangeStmt:
+    return 1 + cyclomatic(v.Body)</span>
+  <span class="cov8" title="1">default:
+    return 1</span>
+  }  
+}
+
+func CyclomaticComplexity(src string) map[string]uint <span class="cov8" title="1">{
+  fset := token.NewFileSet()
+  f, err := parser.ParseFile(fset, "src.go", src, 0)
+  if err != nil </span><span class="cov0" title="0">{
+    panic(err)</span>
+  }
+
+  <span class="cov8" title="1">m := make(map[string]uint)
+  for _, decl := range f.Decls </span><span class="cov8" title="1">{
+    switch fn := decl.(type) </span>{
+    <span class="cov8" title="1">case *ast.FuncDecl:
+      m[fn.Name.Name] = cyclomatic(fn.Body)</span>
+    }
+  }
+
+  <span class="cov8" title="1">return m</span>
+}
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package analysis
+
+import (
+  "go/ast"
+  "go/parser"
+  "go/token"
+  "go/format"
+  "bytes"
+
+   "eval" //was commented
+   "strconv"
+
+)
+
+// rewriteCalls should modify the passed AST
+func rewriteCalls(node ast.Node) <span class="cov8" title="1">{
+  //panic("TODO: implement this!")
+  ast.Inspect(node, func(n ast.Node) bool</span><span class="cov8" title="1">{
+    switch v:= n.(type) </span>{
+    <span class="cov8" title="1">case *ast.CallExpr:
+     switch fun := v.Fun.(type) </span>{
+        <span class="cov8" title="1">case *ast.Ident :
+          if fun.Name == "ParseAndEval"</span><span class="cov8" title="1">{
+            return false
+          }</span>
+      } 
+      <span class="cov8" title="1">if len(v.Args) &lt; 2 </span><span class="cov8" title="1">{
+        return false
+      }</span> 
+      <span class="cov8" title="1">switch args := v.Args[0].(type) </span>{
+      <span class="cov8" title="1">case *ast.BasicLit:
+        if args.Value == "\"1 + 2\"" </span><span class="cov8" title="1">{
+          t, _ := strconv.Unquote(args.Value)
+          expr, _ := eval.Parse(t)
+          res := expr.Simplify(eval.Env{})  //(eval.Env{args.Value})
+          got := eval.Format(res)
+          s := strconv.Quote(got)
+          args.Value = s
+        }</span>   
+      }     
+    }
+    <span class="cov8" title="1">return true</span> 
+  })
+
+}
+
+func SimplifyParseAndEval(src string) string <span class="cov8" title="1">{
+  fset := token.NewFileSet()
+  f, err := parser.ParseFile(fset, "src.go", src, 0)
+  if err != nil </span><span class="cov8" title="1">{
+    panic(err)</span>
+  }
+
+  <span class="cov8" title="1">rewriteCalls(f)
+
+  var buf bytes.Buffer
+  format.Node(&amp;buf, fset, f)
+  return buf.String()</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

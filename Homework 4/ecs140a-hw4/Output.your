@@ -1,0 +1,244 @@
+
+TESTING: Novels published during the year 1953 or 1996
+
+testing: year_1953_1996_novels(1953_1996_Novel)
+1953_1996_Novel (sorted) = {
+  a_song_of_ice_and_fire_series,
+  childhoods_end,
+  fahrenheit451,
+  neverwhere,
+  the_caves_of_steel,
+}
+
+
+TESTING: Novels published during the period 1800 to 1900
+
+testing: period_1800_1900_novels(1800_1900_Novel)
+1800_1900_Novel (sorted) = {
+  frankenstein,
+  little_women,
+  the_20000_leagues_under_the_sea,
+  the_journey_to_the_center_of_the_earth,
+  the_time_machine,
+  the_war_of_the_worlds,
+}
+
+
+TESTING: Characters who are fans of LOTR
+
+testing: lotr_fans(LOTR_Fan)
+LOTR_Fan (sorted) = {
+  amy,
+  gunther,
+  monica,
+  ursula,
+  zelner,
+}
+
+
+TESTING: Authors of the novels owned by Chandler
+
+testing: author_names(Chandler's_novel_Author)
+Chandler's_novel_Author (sorted) = {
+  arthur_clarke,
+  george_rr_martin,
+  isaac_asimov,
+  robert_heinlein,
+  william_gibson,
+}
+
+
+TESTING: Characters who are fans of Brandon Sanderson's novels
+
+testing: fans_names(Brandon_Sanderson_Fan)
+Brandon_Sanderson_Fan (sorted) = {
+  amy,
+  heckles,
+  leonard,
+  monica,
+  nora,
+  tag,
+}
+
+
+TESTING:  Novels common between either of Phoebe, Ross, and Monica
+
+testing: mutual_novels(Phoebe_Ross_Monica_Novel)
+Phoebe_Ross_Monica_Novel (sorted, deduplicated) = {
+  something_wicked_this_way_comes,
+  the_princess_bride,
+  the_time_machine,
+  the_wheel_of_time_series,
+}
+
+
+TESTING: isMember
+
+testing: isMember(a,[a,b])
+yes
+
+testing: isMember(a,[[a],b])
+no
+
+testing: isMember([],[a,b])
+no
+
+testing: isMember(b,[a,[b,c]])
+no
+
+testing: isMember(c,[a,[b,[c]]])
+no
+
+testing: isMember(c,[a,b,c,d])
+yes
+
+
+TESTING: isUnion
+
+testing: isUnion([],[],XuY)
+XuY (sorted) = []
+
+testing: isUnion([],[a,b],XuY)
+XuY (sorted) = [a,b]
+
+testing: isUnion([a],[a,b],XuY)
+XuY (sorted) = [a,b]
+
+testing: isUnion([a,b],[a],XuY)
+XuY (sorted) = [a,b]
+
+testing: isUnion([a,b],[b,c],XuY)
+XuY (sorted) = [a,b,c]
+
+testing: isUnion([b,c],[a,b],XuY)
+XuY (sorted) = [a,b,c]
+
+testing: isUnion([a,b],[c,d],XuY)
+XuY (sorted) = [a,b,c,d]
+
+testing: isUnion([a,[b]],[a,[a,b]],XuY)
+XuY (sorted) = [a,[a,b],[b]]
+
+testing: isUnion([a,b,c],[a,[b,c]],XuY)
+XuY (sorted) = [a,b,c,[b,c]]
+
+testing: isUnion([a,b,c],[a,[b,[d]],c],XuY)
+XuY (sorted) = [a,b,c,[b,[d]]]
+
+
+TESTING: isIntersection
+
+testing: isIntersection([],[],XnY)
+XnY (sorted) = []
+
+testing: isIntersection([],[a,b],XnY)
+XnY (sorted) = []
+
+testing: isIntersection([a],[a,b],XnY)
+XnY (sorted) = [a]
+
+testing: isIntersection([a,b],[a],XnY)
+XnY (sorted) = [a]
+
+testing: isIntersection([a,b],[b,c],XnY)
+XnY (sorted) = [b]
+
+testing: isIntersection([b,c],[a,b],XnY)
+XnY (sorted) = [b]
+
+testing: isIntersection([a,b],[c,d],XnY)
+XnY (sorted) = []
+
+testing: isIntersection([a,[b]],[a,[a,b]],XnY)
+XnY (sorted) = [a]
+
+testing: isIntersection([a,b,c],[a,[b,c]],XnY)
+XnY (sorted) = [a]
+
+testing: isIntersection([a,b,c,[d]],[a,[b,[d]],c],XnY)
+XnY (sorted) = [a,c]
+
+
+TESTING: isEqual
+
+testing: isEqual([],[])
+yes
+
+testing: isEqual([a],[a])
+yes
+
+testing: isEqual([a,b],[b,a])
+yes
+
+testing: isEqual([a,b,c],[a,b])
+no
+
+testing: isEqual([a,[a]],[a,a])
+no
+
+testing: isEqual([a,[a]],[[a],a])
+yes
+
+testing: isEqual([a,[b],[c]],[[b],[c],a])
+yes
+
+testing: isEqual([a,b,[c,d]],[a,b,c,d])
+no
+
+testing: isEqual([a,[b],[c,d]],[a,[b],[d,c]])
+no
+
+testing: isEqual([a,[b,[c,d]]],[a,[[c,d],b]])
+no
+
+
+TESTING: powerSet
+
+testing: powerSet([],P(X))
+P(X) (sorted) = [[]]
+
+testing: powerSet([a],P(X))
+P(X) (sorted) = [[],[a]]
+
+testing: powerSet([a,b],P(X))
+P(X) (sorted) = [[],[a],[a,b],[b]]
+
+testing: powerSet([b,a],P(X))
+P(X) (sorted) = [[],[a],[b],[b,a]]
+
+testing: powerSet([a,[b]],P(X))
+P(X) (sorted) = [[],[a],[a,[b]],[[b]]]
+
+testing: powerSet([[a,b]],P(X))
+P(X) (sorted) = [[],[[a,b]]]
+
+testing: powerSet([a,[]],P(X))
+P(X) (sorted) = [[],[[]],[a],[a,[]]]
+
+testing: powerSet([a,b,[c]],P(X))
+P(X) (sorted) = [[],[a],[a,b],[a,b,[c]],[a,[c]],[b],[b,[c]],[[c]]]
+
+testing: powerSet([a,[b,c]],P(X))
+P(X) (sorted) = [[],[a],[a,[b,c]],[[b,c]]]
+
+testing: powerSet([a,[b,[c,[d]]]],P(X))
+P(X) (sorted) = [[],[a],[a,[b,[c,[d]]]],[[b,[c,[d]]]]]
+
+
+TESTING puzzle
+
+take(goat,left,right)
+take(none,right,left)
+take(wolf,left,right)
+take(goat,right,left)
+take(cabbage,left,right)
+take(none,right,left)
+take(goat,left,right)
+
+
+
+TESTING puzzle
+
+
+TESTING puzzle
+

@@ -1,0 +1,444 @@
+
+          BEGIN TESTING
+
+
+                    TEST-Element-count
+
+testing:  (ELEMENT-COUNT 'A 'NIL)
+value:    0
+
+testing:  (ELEMENT-COUNT 'A '(B C D E F))
+value:    0
+
+testing:  (ELEMENT-COUNT 'A '(A B C E F))
+value:    1
+
+testing:  (ELEMENT-COUNT '2 '(2 1 2 2 3 4 2 6 7 2))
+value:    5
+
+testing:  (ELEMENT-COUNT 'A '(C A D A B C D))
+value:    2
+
+testing:  (ELEMENT-COUNT '1 '(A B 1 C D 1 E F))
+value:    2
+
+testing:  (ELEMENT-COUNT 'HI '(HELLO HEY THERE))
+value:    0
+
+testing:  (ELEMENT-COUNT 'HI '(HI HELLO HEY HI THERE))
+value:    2
+
+testing:  (ELEMENT-COUNT 'AB '(AB ABB ABAB))
+value:    1
+
+testing:  (ELEMENT-COUNT 'B '(B))
+value:    1
+
+
+                    TEST-Min-mean-max
+
+testing:  (MIN-MEAN-MAX 'NIL)
+value:    NIL
+
+testing:  (MIN-MEAN-MAX '(5))
+value:    (5 5 5)
+
+testing:  (MIN-MEAN-MAX '(5 4 3 2 1))
+value:    (1 3 5)
+
+testing:  (MIN-MEAN-MAX '(0 6 8 2 3 -1))
+value:    (-1 3 8)
+
+testing:  (MIN-MEAN-MAX '(8 8 8 8 8 8 8 8))
+value:    (8 8 8)
+
+testing:  (MIN-MEAN-MAX '(8 8 8 8 8 8 8 9))
+value:    (8 65/8 9)
+
+testing:  (MIN-MEAN-MAX '(6 6 5 -4 3 2 1 1))
+value:    (-4 5/2 6)
+
+testing:  (MIN-MEAN-MAX '(0 -1 1 -2 2 -3 3))
+value:    (-3 0 3)
+
+testing:  (MIN-MEAN-MAX '(1 2 3))
+value:    (1 2 3)
+
+testing:  (MIN-MEAN-MAX '(0 -1))
+value:    (-1 -1/2 0)
+
+
+                    TEST-Shift
+
+testing:  (SHIFT 1 NIL)
+value:    NIL
+
+testing:  (SHIFT 2 '(A B C D E F))
+value:    (C D E F A B)
+
+testing:  (SHIFT 3 '(1 2 3 4 5))
+value:    (4 5 1 2 3)
+
+testing:  (SHIFT 4 '(I J 1 2 K L))
+value:    (K L I J 1 2)
+
+testing:  (SHIFT 5 '(1 2 3 4))
+value:    (2 3 4 1)
+
+testing:  (SHIFT 6 '(6 5 4 3 2 1))
+value:    (6 5 4 3 2 1)
+
+testing:  (SHIFT 0 '(6 5 4 3 2 1))
+value:    (6 5 4 3 2 1)
+
+testing:  (SHIFT 3 '(6 5 4 3 2 1))
+value:    (3 2 1 6 5 4)
+
+testing:  (SHIFT 7 '(6 5 4 3 2 1))
+value:    (5 4 3 2 1 6)
+
+testing:  (SHIFT 0 '(6 5 4 3 2 1))
+value:    (6 5 4 3 2 1)
+
+
+                    TEST-Pivot
+
+testing:  (PIVOT 2 'NIL)
+value:    (NIL NIL)
+
+testing:  (PIVOT 5 '(6 4 3 1 7 9))
+value:    ((4 3 1) (6 7 9))
+
+testing:  (PIVOT 3 '(3 2 5 1 4))
+value:    ((2 1) (3 5 4))
+
+testing:  (PIVOT 6 '(1 2 3 5 4 5))
+value:    ((1 2 3 5 4 5) NIL)
+
+testing:  (PIVOT 8 '(8 9 12 11 15))
+value:    (NIL (8 9 12 11 15))
+
+testing:  (PIVOT 10 '(21 11 4 14 5 15 13 2 9))
+value:    ((4 5 2 9) (21 11 14 15 13))
+
+testing:  (PIVOT 5 '(-6 4 -3 1 7 -9))
+value:    ((-6 4 -3 1 -9) (7))
+
+testing:  (PIVOT -3 '(3 2 -5 1 -4))
+value:    ((-5 -4) (3 2 1))
+
+testing:  (PIVOT 6 '(-1 2 3 5 4 -5))
+value:    ((-1 2 3 5 4 -5) NIL)
+
+testing:  (PIVOT -8 '(-8 -9 -12 -11 -15))
+value:    ((-9 -12 -11 -15) (-8))
+
+
+                    TEST-Break-list
+
+testing:  (BREAK-LIST 'A 'NIL)
+value:    NIL
+
+testing:  (BREAK-LIST 'A '(B C D E F))
+value:    ((B C D E F))
+
+testing:  (BREAK-LIST 'D '(A B C D E F))
+value:    ((A B C) (E F))
+
+testing:  (BREAK-LIST '2 '(2 1 2 2 3 4 2 6 7 2))
+value:    ((1) (3 4) (6 7))
+
+testing:  (BREAK-LIST 'A '(C A D A B C D))
+value:    ((C) (D) (B C D))
+
+testing:  (BREAK-LIST '1 '(A B 1 C D 1 E F))
+value:    ((A B) (C D) (E F))
+
+testing:  (BREAK-LIST '1 '(1 A B 1 C D 1 E F))
+value:    ((A B) (C D) (E F))
+
+testing:  (BREAK-LIST '1 '(A B 1 C D 1 E F -1))
+value:    ((A B) (C D) (E F -1))
+
+testing:  (BREAK-LIST '-1 '(A B -1 C D -1 E F -1))
+value:    ((A B) (C D) (E F))
+
+testing:  (BREAK-LIST '1 '(1 1 1))
+value:    NIL
+
+
+                    TEST-Pivot
+
+testing:  (PIVOT 2 'NIL)
+value:    (NIL NIL)
+
+testing:  (PIVOT 5 '(6 4 3 1 7 9))
+value:    ((4 3 1) (6 7 9))
+
+testing:  (PIVOT 3 '(3 2 5 1 4))
+value:    ((2 1) (3 5 4))
+
+testing:  (PIVOT 6 '(1 2 3 5 4 5))
+value:    ((1 2 3 5 4 5) NIL)
+
+testing:  (PIVOT 8 '(8 9 12 11 15))
+value:    (NIL (8 9 12 11 15))
+
+testing:  (PIVOT 10 '(21 11 4 14 5 15 13 2 9))
+value:    ((4 5 2 9) (21 11 14 15 13))
+
+testing:  (PIVOT 5 '(-6 4 -3 1 7 -9))
+value:    ((-6 4 -3 1 -9) (7))
+
+testing:  (PIVOT -3 '(3 2 -5 1 -4))
+value:    ((-5 -4) (3 2 1))
+
+testing:  (PIVOT 6 '(-1 2 3 5 4 -5))
+value:    ((-1 2 3 5 4 -5) NIL)
+
+testing:  (PIVOT -8 '(-8 -9 -12 -11 -15))
+value:    ((-9 -12 -11 -15) (-8))
+
+
+                    TEST-Quicksort
+
+testing:  (QUICKSORT 'NIL)
+value:    NIL
+
+testing:  (QUICKSORT '(6 4 3 1 7 9))
+value:    (1 3 4 6 7 9)
+
+testing:  (QUICKSORT '(8 1 -2 3 5 4))
+value:    (-2 1 3 4 5 8)
+
+testing:  (QUICKSORT '(8 9 12 11 15))
+value:    (8 9 11 12 15)
+
+testing:  (QUICKSORT '(21 11 4 -14 5 15 13 2 9))
+value:    (-14 2 4 5 9 11 13 15 21)
+
+testing:  (QUICKSORT '(21 -11 4 -14 -5 15 -13 2 9))
+value:    (-14 -13 -11 -5 2 4 9 15 21)
+
+testing:  (QUICKSORT '(21 11 4 0 14 5 15 13 2 9))
+value:    (0 2 4 5 9 11 13 14 15 21)
+
+testing:  (QUICKSORT '(8))
+value:    (8)
+
+testing:  (QUICKSORT '(8 2))
+value:    (2 8)
+
+testing:  (QUICKSORT '(-8 2 8))
+value:    (-8 2 8)
+
+
+                    TEST-Match
+
+testing:  (MATCH '(THINK ABOUT THAT) '(THINK THAT ABOUT))
+value:    NIL
+
+testing:  (MATCH '(THINK ABOUT THAT) '(THINK ABOUT THAT))
+value:    T
+
+testing:  (MATCH '(THINK ABOUT THAT) NIL)
+value:    NIL
+
+testing:  (MATCH NIL 'NIL)
+value:    T
+
+testing:  (MATCH NIL '(NIL))
+value:    NIL
+
+testing:  (MATCH '(NIL NIL) '(NIL))
+value:    NIL
+
+testing:  (MATCH '(NIL NIL) '(NIL NIL))
+value:    T
+
+testing:  (MATCH '(A A) '(A))
+value:    NIL
+
+testing:  (MATCH '(A ?) '(A A))
+value:    T
+
+testing:  (MATCH '(A NIL ?) '(A NIL NIL))
+value:    T
+
+testing:  (MATCH '(? ? ? ?) '(WHAT TIME IS IT))
+value:    T
+
+testing:  (MATCH '(? ? ? ? ?) '(WHAT TIME IS IT NOW AH))
+value:    NIL
+
+testing:  (MATCH '(? ? ? ? ?) '(WHAT TIME IS IT))
+value:    NIL
+
+testing:  (MATCH '(? COLOR APPLE) '(COLOR COLOR APPLE NIL))
+value:    NIL
+
+testing:  (MATCH '(THIS TABLE IS ROUND ?) '(THIS TABLE IS ROUND OR))
+value:    T
+
+testing:  (MATCH '(THIS !) '(THIS TABLE IS ROUND))
+value:    T
+
+testing:  (MATCH '(THIS ! IS ROUND) '(THIS TABLE IS ROUND))
+value:    T
+
+testing:  (MATCH '(THIS TABLE !) '(THIS THIS TABLE IS ROUND))
+value:    NIL
+
+testing:  (MATCH '(! TABLE IS ROUND) '(THIS TABLE IS ROUND OR))
+value:    NIL
+
+testing:  (MATCH '(! TABLE IS ROUND) '(THIS TABLE))
+value:    NIL
+
+testing:  (MATCH '(THIS ! ROUND) '(THIS TABLE IS ROUND))
+value:    T
+
+testing:  (MATCH '(IS THAT FINE ?) '(THAT FINE TOO))
+value:    NIL
+
+testing:  (MATCH '(!) '(NO MATTER WHAT))
+value:    T
+
+testing:  (MATCH '(! ! !) '(NO MATTER WHAT))
+value:    T
+
+testing:  (MATCH '(! ! ! !) '(NO MATTER WHAT))
+value:    NIL
+
+testing:  (MATCH '(! BIG ! ?) '(A YELLOW BIG WOODEN BAG))
+value:    T
+
+testing:  (MATCH '(! BIG ! ?) '(A YELLOW BIG BAG))
+value:    NIL
+
+testing:  (MATCH '(! ! ? ! !) '(HOW ARE YOU TODAY AH))
+value:    T
+
+testing:  (MATCH '(! ! ! ! !) '(HOW ARE YOU TODAY))
+value:    NIL
+
+testing:  (MATCH '(! ? ? FUNNY !) '(IS IT REALLY FUNNY OR WHAT))
+value:    T
+
+testing:  (MATCH '(! ? ? FUNNY !) '(IS IT REALLY FUNNY))
+value:    NIL
+
+testing:  (MATCH '(? ? ! ? A) '(A A A A))
+value:    NIL
+
+testing:  (MATCH '(? ? ! ? A !) '(A A A A A NIL))
+value:    T
+
+testing:  (MATCH '(! B ? B A B A ! ? !) '(B B A B A B A B A B A))
+value:    T
+
+testing:  (MATCH '(! B ? A B A B ! ? !) '(B B A B A B A B A B))
+value:    NIL
+
+
+                    TEST-Matrix-add
+
+testing:  (MATRIX-ADD 'NIL 'NIL)
+value:    NIL
+
+testing:  (MATRIX-ADD '((0)) '((0)))
+value:    ((0))
+
+testing:  (MATRIX-ADD '((9)) '((15)))
+value:    ((24))
+
+testing:  (MATRIX-ADD '((1 2) (2 1)) '((3 1) (1 3)))
+value:    ((4 3) (3 4))
+
+testing:  (MATRIX-ADD '((1 2 3) (5 6 7)) '((8 9 10) (11 12 13)))
+value:    ((9 11 13) (16 18 20))
+
+testing:  (MATRIX-ADD '((1 -2 3) (-5 6 7)) '((-8 9 -10) (-11 12 -13)))
+value:    ((-7 7 -7) (-16 18 -6))
+
+testing:  (MATRIX-ADD '((1) (-5) (6) (7)) '((-8) (9) (-10) (-11)))
+value:    ((-7) (4) (-4) (-4))
+
+testing:  (MATRIX-ADD '((1 -2 3)) '((-8 9 -10)))
+value:    ((-7 7 -7))
+
+testing:  (MATRIX-ADD '((1 -2 3 4 5)) '((-8 9 -10 5 6)))
+value:    ((-7 7 -7 9 11))
+
+testing:  (MATRIX-ADD '((1 -2) (-5 6) (8 9)) '((-8 9) (-11 12) (14 15)))
+value:    ((-7 7) (-16 18) (22 24))
+
+
+                    TEST-Matrix-multiply
+
+testing:  (MATRIX-MULTIPLY 'NIL 'NIL)
+value:    NIL
+
+testing:  (MATRIX-MULTIPLY '((1 2) (2 1)) '((3 1) (1 3)))
+value:    ((5 7) (7 5))
+
+testing:  (MATRIX-MULTIPLY '((1 2) (2 1)) '((5 6 7) (8 9 10)))
+value:    ((21 24 27) (18 21 24))
+
+testing:  (MATRIX-MULTIPLY '((1 -2) (2 -1)) '((5 -6 7) (-8 9 -10)))
+value:    ((21 -24 27) (18 -21 24))
+
+testing:  (MATRIX-MULTIPLY '((1 0) (-1 1)) '((0 1 1) (0 1 0)))
+value:    ((0 1 1) (0 0 -1))
+
+testing:  (MATRIX-MULTIPLY '((0 0) (0 0)) '((0 0 0) (0 0 0)))
+value:    ((0 0 0) (0 0 0))
+
+testing:  (MATRIX-MULTIPLY '((1 2) (2 1)) '((5 6 7 8) (9 10 11 12)))
+value:    ((23 26 29 32) (19 22 25 28))
+
+testing:  (MATRIX-MULTIPLY '((1 0 1 9)) '((9) (8) (7) (6)))
+value:    ((70))
+
+testing:  (MATRIX-MULTIPLY '((1 2) (2 1)) '((5 6 7 18) (9 -10 11 12)))
+value:    ((23 -14 29 42) (19 2 25 48))
+
+testing:  (MATRIX-MULTIPLY '((1 0 11 9)) '((9) (8) (20) (6)))
+value:    ((283))
+
+
+                    TEST-Matrix-transpose
+
+testing:  (MATRIX-TRANSPOSE '(NIL))
+value:    NIL
+
+testing:  (MATRIX-TRANSPOSE '(NIL NIL))
+value:    NIL
+
+testing:  (MATRIX-TRANSPOSE '((1 2) (3 4)))
+value:    ((1 3) (2 4))
+
+testing:  (MATRIX-TRANSPOSE '((1 2) (3 4) (5 6)))
+value:    ((1 3 5) (2 4 6))
+
+testing:  (MATRIX-TRANSPOSE '((A B) (C D) (E F) (G H)))
+value:    ((A C E G) (B D F H))
+
+testing:  (MATRIX-TRANSPOSE '((A B C D) (E F G H)))
+value:    ((A E) (B F) (C G) (D H))
+
+testing:  (MATRIX-TRANSPOSE '((A B C D E) (F G H I J)))
+value:    ((A F) (B G) (C H) (D I) (E J))
+
+testing:  (MATRIX-TRANSPOSE '((A B C D E)))
+value:    ((A) (B) (C) (D) (E))
+
+testing:  (MATRIX-TRANSPOSE '((A) (B) (C) (D) (E)))
+value:    ((A B C D E))
+
+testing:  (MATRIX-TRANSPOSE '((A B C) (C D E) (E F G) (G H I)))
+value:    ((A C E G) (B D F H) (C E G I))
+
+
+          DONE TESTING
+

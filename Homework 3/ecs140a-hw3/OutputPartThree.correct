@@ -1,0 +1,99 @@
+
+                    TEST-Matrix-add
+
+testing:  (MATRIX-ADD 'NIL 'NIL)
+value:    NIL
+
+testing:  (MATRIX-ADD '((0)) '((0)))
+value:    ((0))
+
+testing:  (MATRIX-ADD '((9)) '((15)))
+value:    ((24))
+
+testing:  (MATRIX-ADD '((1 2) (2 1)) '((3 1) (1 3)))
+value:    ((4 3) (3 4))
+
+testing:  (MATRIX-ADD '((1 2 3) (5 6 7)) '((8 9 10) (11 12 13)))
+value:    ((9 11 13) (16 18 20))
+
+testing:  (MATRIX-ADD '((1 -2 3) (-5 6 7)) '((-8 9 -10) (-11 12 -13)))
+value:    ((-7 7 -7) (-16 18 -6))
+
+testing:  (MATRIX-ADD '((1) (-5) (6) (7)) '((-8) (9) (-10) (-11)))
+value:    ((-7) (4) (-4) (-4))
+
+testing:  (MATRIX-ADD '((1 -2 3)) '((-8 9 -10)))
+value:    ((-7 7 -7))
+
+testing:  (MATRIX-ADD '((1 -2 3 4 5)) '((-8 9 -10 5 6)))
+value:    ((-7 7 -7 9 11))
+
+testing:  (MATRIX-ADD '((1 -2) (-5 6) (8 9)) '((-8 9) (-11 12) (14 15)))
+value:    ((-7 7) (-16 18) (22 24))
+
+
+                    TEST-Matrix-multiply
+
+testing:  (MATRIX-MULTIPLY 'NIL 'NIL)
+value:    NIL
+
+testing:  (MATRIX-MULTIPLY '((1 2) (2 1)) '((3 1) (1 3)))
+value:    ((5 7) (7 5))
+
+testing:  (MATRIX-MULTIPLY '((1 2) (2 1)) '((5 6 7) (8 9 10)))
+value:    ((21 24 27) (18 21 24))
+
+testing:  (MATRIX-MULTIPLY '((1 -2) (2 -1)) '((5 -6 7) (-8 9 -10)))
+value:    ((21 -24 27) (18 -21 24))
+
+testing:  (MATRIX-MULTIPLY '((1 0) (-1 1)) '((0 1 1) (0 1 0)))
+value:    ((0 1 1) (0 0 -1))
+
+testing:  (MATRIX-MULTIPLY '((0 0) (0 0)) '((0 0 0) (0 0 0)))
+value:    ((0 0 0) (0 0 0))
+
+testing:  (MATRIX-MULTIPLY '((1 2) (2 1)) '((5 6 7 8) (9 10 11 12)))
+value:    ((23 26 29 32) (19 22 25 28))
+
+testing:  (MATRIX-MULTIPLY '((1 0 1 9)) '((9) (8) (7) (6)))
+value:    ((70))
+
+testing:  (MATRIX-MULTIPLY '((1 2) (2 1)) '((5 6 7 18) (9 -10 11 12)))
+value:    ((23 -14 29 42) (19 2 25 48))
+
+testing:  (MATRIX-MULTIPLY '((1 0 11 9)) '((9) (8) (20) (6)))
+value:    ((283))
+
+
+                    TEST-Matrix-transpose
+
+testing:  (MATRIX-TRANSPOSE '(NIL))
+value:    NIL
+
+testing:  (MATRIX-TRANSPOSE '(NIL NIL))
+value:    NIL
+
+testing:  (MATRIX-TRANSPOSE '((1 2) (3 4)))
+value:    ((1 3) (2 4))
+
+testing:  (MATRIX-TRANSPOSE '((1 2) (3 4) (5 6)))
+value:    ((1 3 5) (2 4 6))
+
+testing:  (MATRIX-TRANSPOSE '((A B) (C D) (E F) (G H)))
+value:    ((A C E G) (B D F H))
+
+testing:  (MATRIX-TRANSPOSE '((A B C D) (E F G H)))
+value:    ((A E) (B F) (C G) (D H))
+
+testing:  (MATRIX-TRANSPOSE '((A B C D E) (F G H I J)))
+value:    ((A F) (B G) (C H) (D I) (E J))
+
+testing:  (MATRIX-TRANSPOSE '((A B C D E)))
+value:    ((A) (B) (C) (D) (E))
+
+testing:  (MATRIX-TRANSPOSE '((A) (B) (C) (D) (E)))
+value:    ((A B C D E))
+
+testing:  (MATRIX-TRANSPOSE '((A B C) (C D E) (E F G) (G H I)))
+value:    ((A C E G) (B D F H) (C E G I))
+
